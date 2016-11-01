@@ -95,26 +95,13 @@ let load = Loader({
     })
   },
 
-  publisher: {
-    requires: ['cfg', 'validator'],
-    setup: ({cfg, validator}) =>
-      exchanges.setup({
-        credentials:      cfg.pulse,
-        exchangePrefix:   cfg.app.exchangePrefix,
-        validator:        validator,
-        referencePrefix:  'auth/v1/exchanges.json',
-        publish:          cfg.app.publishMetaData,
-        aws:              cfg.aws,
-      })
-  },
-
   api: {
     requires: [
-      'cfg', 'Client', 'Role', 'validator', 'publisher', 'resolver',
+      'cfg', 'Client', 'Role', 'validator', 'resolver',
       'sentryManager'
     ],
     setup: async ({
-      cfg, Client, Role, validator, publisher, resolver, sentryManager
+      cfg, Client, Role, validator, resolver, sentryManager
     }) => {
       // Set up the Azure tables
       await Role.ensureTable();
@@ -143,7 +130,6 @@ let load = Loader({
       return v1.setup({
         context: {
           Client, Role,
-          publisher,
           resolver,
           sts:                new AWS.STS(cfg.aws),
           azureAccounts:      cfg.app.azureAccounts,

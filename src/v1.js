@@ -67,9 +67,6 @@ var api = new API({
     // Instances of data.Client and data.Role
     'Client', 'Role',
 
-    // Publisher from exchanges.js
-    'publisher',
-
     // ScopeResolver instance
     'resolver',
 
@@ -236,7 +233,6 @@ api.declare({
 
   // Send pulse message
   await Promise.all([
-    this.publisher.clientCreated({clientId}),
     this.resolver.reloadClient(clientId)
   ]);
 
@@ -289,7 +285,6 @@ api.declare({
 
   // Publish message on pulse to clear caches...
   await Promise.all([
-    this.publisher.clientUpdated({clientId}),
     this.resolver.reloadClient(clientId)
   ]);
 
@@ -350,7 +345,6 @@ api.declare({
 
   // Publish message on pulse to clear caches...
   await Promise.all([
-    this.publisher.clientUpdated({clientId}),
     this.resolver.reloadClient(clientId)
   ]);
 
@@ -397,7 +391,6 @@ api.declare({
 
   // Publish message on pulse to clear caches...
   await Promise.all([
-    this.publisher.clientUpdated({clientId}),
     this.resolver.reloadClient(clientId)
   ]);
 
@@ -443,7 +436,6 @@ api.declare({
 
   // Publish message on pulse to clear caches...
   await Promise.all([
-    this.publisher.clientUpdated({clientId}),
     this.resolver.reloadClient(clientId)
   ]);
 
@@ -475,7 +467,6 @@ api.declare({
   await this.Client.remove({clientId}, true);
 
   await Promise.all([
-    this.publisher.clientDeleted({clientId}),
     this.resolver.reloadClient(clientId)
   ]);
 
@@ -602,7 +593,6 @@ api.declare({
 
   // Send pulse message
   await Promise.all([
-    this.publisher.roleCreated({roleId}),
     this.resolver.reloadRole(roleId)
   ]);
 
@@ -658,7 +648,6 @@ api.declare({
 
   // Publish message on pulse to clear caches...
   await Promise.all([
-    this.publisher.roleUpdated({roleId}),
     this.resolver.reloadRole(roleId)
   ]);
 
@@ -690,7 +679,6 @@ api.declare({
   await this.Role.remove({roleId}, true);
 
   await Promise.all([
-    this.publisher.roleDeleted({roleId}),
     this.resolver.reloadRole(roleId)
   ]);
 
