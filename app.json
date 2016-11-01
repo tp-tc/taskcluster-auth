@@ -16,6 +16,12 @@
     "SENTRY_INITIAL_TEAM": {
       "description": "The sentry organization.",
       "required": true
+    },
+    "TABLE_SIGNING_KEY": {
+      "description": "Key for signing in base.Entity (sufficiently random string required)"
+    },
+    "TABLE_CRYPTO_KEY": {
+      "description": "Key for data encryption in base.Entity (32 random bytes as base64)"
     }
   }
 }
