@@ -3,5 +3,19 @@
   "description": "TaskCluster - Authentication Server",
   "repository": "https://github.com/taskcluster/taskcluster-auth",
   "logo": "https://tools.taskcluster.net/lib/assets/taskcluster-120.png",
-  "keywords": ["taskcluster"]
+  "keywords": ["taskcluster"],
+  "env": {
+    "SENTRY_API_KEY": {
+      "description": "The sentry API key.",
+      "required": true
+    },
+    "SENTRY_ORGANIZATION": {
+      "description": "The sentry organization.",
+      "required": true
+    },
+    "SENTRY_INITIAL_TEAM": {
+      "description": "The sentry organization.",
+      "required": true
+    }
+  }
 }

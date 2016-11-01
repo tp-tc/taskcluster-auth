@@ -135,3 +135,9 @@ test:
     trustProxy:               true
   checkStaging:
     baseUrl:                  "https://taskcluster-auth-staging.herokuapp.com/v1/"
+
+
+heroku-deploy:
+  sentry:
+    organization:             !env SENTRY_ORGANIZATION
+    initialTeam:              !env SENTRY_INITIAL_TEAM
