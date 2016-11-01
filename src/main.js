@@ -115,11 +115,6 @@ let load = Loader({
       // Load everything for resolver
       await resolver.setup({
         Client, Role,
-        exchangeReference: exchanges.reference({
-          credentials:      cfg.pulse,
-          exchangePrefix:   cfg.app.exchangePrefix,
-        }),
-        connection: new taskcluster.PulseConnection(cfg.pulse)
       });
 
       let signatureValidator = signaturevalidator.createSignatureValidator({

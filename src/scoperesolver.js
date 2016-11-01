@@ -63,43 +63,9 @@ class ScopeResolver extends events.EventEmitter {
     });
     assert(options.Client, "Expected options.Client");
     assert(options.Role, "Expected options.Role");
-    assert(options.exchangeReference, "Expected options.exchangeReference");
-    assert(options.connection instanceof taskcluster.PulseConnection,
-           "Expected options.connection to be a PulseConnection object");
     this._Client        = options.Client;
     this._Role          = options.Role;
     this._options       = options;
-
-    // Create authEvents client
-    var AuthEvents = taskcluster.createClient(this._options.exchangeReference);
-    var authEvents = new AuthEvents();
-
-    // Create PulseListeners
-    this._clientListener = new taskcluster.PulseListener({
-      connection:   options.connection,
-      reconnect:    true
-    });
-    this._roleListener = new taskcluster.PulseListener({
-      connection:   options.connection,
-      reconnect:    true
-    });
-
-    // listen for client events
-    await this._clientListener.bind(authEvents.clientCreated());
-    await this._clientListener.bind(authEvents.clientUpdated());
-    await this._clientListener.bind(authEvents.clientDeleted());
-    // listen for role events
-    await this._roleListener.bind(authEvents.roleCreated());
-    await this._roleListener.bind(authEvents.roleUpdated());
-    await this._roleListener.bind(authEvents.roleDeleted());
-
-    // Reload when we get message
-    this._clientListener.on('message', m => {
-      return this.reloadClient(m.payload.clientId);
-    });
-    this._roleListener.on('message', m => {
-      return this.reloadRole(m.payload.roleId);
-    });
 
     // Load initially
     await this.reload();
@@ -108,10 +74,6 @@ class ScopeResolver extends events.EventEmitter {
     this._reloadIntervalHandle = setInterval(() => {
       this.reload().catch(err => this.emit('error', err));
     }, this._options.cacheExpiry);
-
-    // Start listening
-    await this._clientListener.resume();
-    await this._roleListener.resume();
   }
 
   /**
