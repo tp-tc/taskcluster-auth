@@ -76,11 +76,16 @@ class SentryManager {
         project, err, err.stack
       );
       // Ignore error try to create the project, and list keys again.
+      try {
       await this._sentry.teams.createProject(
         this._organization, this._initialTeam, {
         name: project,
         slug: project,
       });
+      } catch (err) {
+	debug("Failed to create project. err: %s, stack: %s", err, err.stack);
+	throw(err);
+      }
       keys = await this._sentry.projects.keys(this._organization, project);
     }
 
