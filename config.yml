@@ -138,9 +138,10 @@ test:
 
 
 heroku-deploy:
-  sentry:
-    organization:             !env SENTRY_ORGANIZATION
-    initialTeam:              !env SENTRY_INITIAL_TEAM
+  app:
+    sentry:
+      organization:             !env SENTRY_ORGANIZATION
+      initialTeam:              !env SENTRY_INITIAL_TEAM
   server:
     env:                      development
     development:              true
